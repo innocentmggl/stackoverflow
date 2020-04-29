@@ -18,7 +18,6 @@ final class AnswerApi {
         let method: HTTPMethod = .get
         
         init(questionId: Int) {
-            print(questionId)
             self.questionId = questionId
             self.path = "/questions/\(questionId)/answers"
         }

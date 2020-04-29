@@ -11,7 +11,7 @@ import UIKit
 final class SearchListItemCell: UITableViewCell {
     
     static let reuseIdentifier = String(describing: SearchListItemCell.self)
-    static let height = CGFloat(120)
+    static let height = CGFloat(110)
     
     @IBOutlet private weak var answeredImageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!

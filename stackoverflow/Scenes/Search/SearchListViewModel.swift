@@ -65,8 +65,8 @@ extension DefaultSearchListViewModel {
             switch result {
             case .success(let questions):
                 self.setResults(questions: questions)
-            case .failure(let sessionTaskError):
-                self.error.value = sessionTaskError.localizedDescription
+            case .failure(let error):
+                self.handleResponseError(error: error)
             }
         }
     }
@@ -113,5 +113,13 @@ extension DefaultSearchListViewModel {
           let viewModel = QuestionListItemViewModel(question: question)
           self.route.value = .navigateToAnswers(with: viewModel)
         }
+    }
+    
+    private func handleResponseError(error: Error){
+        let cancelled = error as NSError
+        guard cancelled.code != -999  else {
+            return
+        }
+        self.error.value = "Error: \(error.localizedDescription)"
     }
 }

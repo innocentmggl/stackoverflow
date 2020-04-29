@@ -30,13 +30,16 @@ final class AnswersListViewController: UIViewController, StoryboardInstantiable,
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.bind(to: viewModel)
-        viewModel.viewDidLoad(with: questionViewModel.id)
+        viewModel.viewDidLoad(with: questionViewModel)
     }
 
     func bind(to viewModel: AnswersListViewModel) {
         
         viewModel.items.observe(on: self) { [weak self] _ in
-            self?.tableView.reloadSections([1], with: .automatic)
+            UIView.setAnimationsEnabled(false)
+            self?.tableView.beginUpdates()
+            self?.tableView.reloadSections([1], with: .none)
+            self?.tableView.endUpdates()
         }
         
         viewModel.loading.observe(on: self) { [weak self] loading in
@@ -69,6 +72,7 @@ extension AnswersListViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: QuestionItemCell.reuseIdentifier, for: indexPath) as? QuestionItemCell else {
                 fatalError("Cannot dequeue reusable cell \(QuestionItemCell.self) with reuseIdentifier: \(QuestionItemCell.reuseIdentifier)")
             }
+            cell.delegate = self
             cell.configure(with: questionViewModel)
             return cell
         }
@@ -82,3 +86,10 @@ extension AnswersListViewController: UITableViewDataSource {
 
 // MARK: - TABLE VIEW  DELEGATE
 extension AnswersListViewController: UITableViewDelegate {}
+
+// MARK: - SORT DELEGATE
+extension AnswersListViewController: QuestionCellDelegater {
+    func sortSegment(didSelectSegmentAt index: Int) {
+        self.viewModel.didSelectSortSegment(at: index)
+    }
+}

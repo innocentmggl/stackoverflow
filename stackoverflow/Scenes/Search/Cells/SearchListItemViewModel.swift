@@ -42,7 +42,12 @@ final class DefaultSearchListItemViewModel: SearchListItemViewModel {
         self.votesCount = "\(AppFormatter.format(question.votesCount)) vote\(question.votesCount > 1 ? "s":"")"
         self.viewsCount = "\(AppFormatter.format(question.viewsCount)) view\(question.viewsCount > 1 ? "s":"")"
         self.isAnswered = question.isAnswered
-        self.askedDateByOwner = "asked \(question.created.toDateString()) by \(question.owner.displayName)".attributedStringWithColor(strings: [question.owner.displayName], color: .systemBlue)
+        if let answeredBy = question.owner.displayName {
+            self.askedDateByOwner = "asked \(question.created.toDateString()) by \(answeredBy)".attributedStringWithColor(strings: [answeredBy], color: .systemBlue)
+        }
+        else{
+            self.askedDateByOwner = NSMutableAttributedString(string: "asked \(question.created.toDateString())")
+        }
     }
 }
 

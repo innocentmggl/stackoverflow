@@ -10,7 +10,8 @@ import Foundation
 
 final class AppFormatter {
     
-    static func format(_ number: Int) -> String {
+    static func format(_ number: Int?) -> String {
+        guard let number = number else {return ""}
         let num = Double(number)
         let thousandNum = num/1000
         let millionNum = num/1000000

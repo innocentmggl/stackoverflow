@@ -11,7 +11,7 @@ import APIKit
 
 final class AnswerRepository {
     
-    func answers(questionId: QuestionId, handler: @escaping (Result<[Answer], SessionTaskError>) -> Void) {
+    func answers(questionId: QuestionId, handler: @escaping (Result<[Answer], Error>) -> Void) {
         let request = AnswerApi.AnswersRequest(questionId: questionId)
         Session.send(request) { result in
             switch result {
@@ -22,11 +22,18 @@ final class AnswerRepository {
                 print("\(response)")
                 print("---------------------------------------------")
                 #endif
-            case .failure(let error):
-                handler(Result.failure(error))
+            case .failure(let taskError):
+                switch taskError {
+                case .connectionError(let error):
+                    handler(Result.failure(error))
+                case .requestError(let error):
+                    handler(Result.failure(error))
+                case .responseError(let error):
+                    handler(Result.failure(error))
+                }
                 #if DEBUG
                 print("------------ Failed API Request ------------")
-                print("\(error)")
+                print("\(taskError)")
                 print("---------------------------------------------")
                 #endif
             }

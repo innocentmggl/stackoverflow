@@ -9,9 +9,9 @@
 import Foundation
 
 struct Owner: Decodable {
-    let displayName: String
-    let reputation: Int
-    let profileImage: URL
+    let displayName: String?
+    let reputation: Int?
+    let profileImage: URL?
 
     private enum CodingKeys: String, CodingKey {
         case displayName = "display_name"

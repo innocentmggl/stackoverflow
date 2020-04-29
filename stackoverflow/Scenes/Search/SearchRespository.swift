@@ -11,7 +11,7 @@ import APIKit
 
 final class SearchRespository {
     
-    func search(title: String, handler: @escaping (Result<[Question], NSError>) -> Void) -> SessionTask? {
+    func search(title: String, handler: @escaping (Result<[Question], Error>) -> Void) -> SessionTask? {
         let request = SearchApi.SearchRequest(title: title, pageSize: 20)
         let session = Session.send(request) { result in
             switch result {
@@ -22,20 +22,18 @@ final class SearchRespository {
                 print("\(response)")
                 print("---------------------------------------------")
                 #endif
-            case .failure(let error):
-                switch error{
-                //dont show cancelled request errors
-                case .connectionError(let connectionError as NSError):
-                    if connectionError.code == -999 {
-                        return
-                    }
-                    handler(Result.failure(error as NSError))
-                default:
-                    handler(Result.failure(error as NSError))
+            case .failure(let taskError):
+                switch taskError {
+                case .connectionError(let error):
+                    handler(Result.failure(error))
+                case .requestError(let error):
+                    handler(Result.failure(error))
+                case .responseError(let error):
+                    handler(Result.failure(error))
                 }
                 #if DEBUG
                 print("------------ Failed API Request ------------")
-                print("\(error)")
+                print("\(taskError)")
                 print("---------------------------------------------")
                 #endif
             }

@@ -22,9 +22,9 @@ final class AnswerListItemCell: UITableViewCell {
     @IBOutlet weak var acceptedImageView: UIImageView!
     
     func configure(with viewModel: AnswersListItemViewModel) {
-        self.votesCountLabel.text = viewModel.votesCount
+        self.votesCountLabel.text = viewModel.votesStr
         self.answerBodyLabel.attributedText = viewModel.body
-        self.answeredDateLabel.text = viewModel.answered
+        self.answeredDateLabel.attributedText = viewModel.answered
         self.ownerReputationLabel.text = viewModel.ownerReputation
         self.ownerNameLabel.text = viewModel.ownerName
         self.profileImageView.sd_setImage(with: viewModel.ownerProfileImage, placeholderImage: UIImage(named: "placeholder.png"))

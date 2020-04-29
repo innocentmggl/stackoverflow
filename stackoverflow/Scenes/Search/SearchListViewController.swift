@@ -10,12 +10,7 @@ import UIKit
 
 class SearchListViewController: UIViewController, StoryboardInstantiable, Alertable {
     
-    @IBOutlet weak var tableView: UITableView! {
-        didSet{
-            tableView.estimatedRowHeight = SearchListItemCell.height
-            tableView.keyboardDismissMode = .onDrag
-        }
-    }
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar! {
