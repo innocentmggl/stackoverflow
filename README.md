@@ -1,10 +1,10 @@
 # Stackoverflow
-Stack Overflow is the iOS app for searching [Stack Overflow](https://stackoverflow.com/) questions and viewing answers
+iOS app for searching [Stack Overflow](https://api.stackexchange.com/docs) questions and answers
 
 |         | Features  |
 ----------|-----------------
-:zero: | Questions search with full info and answers screen
-:one: | Plist configurable search methods with live search option
+:zero: | Questions and answers search using stackexchange API
+:one: | Configurable search methods with live search option
 :two: | Observable event based streams 
 :three: | Answers filtering based on votes, activity and date posted
 :four: | live search throttling and much more...
